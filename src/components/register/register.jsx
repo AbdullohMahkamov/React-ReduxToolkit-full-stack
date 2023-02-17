@@ -3,8 +3,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { signUserStart, signUserSuccess, signUserFailure } from "../../slice/actions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import authService from "../../service/auth";
+import ValidationError from "../validation/validation-error";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -25,9 +27,9 @@ export default function Register() {
   const [username, setUserName] = useState("");
   const [email, setUserEmail] = useState("");
   const [password, setUserPassword] = useState("");
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, loggedIn } = useSelector((state) => state.auth);
 
   const registerHendler = async (e) => {
     e.preventDefault();
@@ -39,12 +41,17 @@ export default function Register() {
     };
     try {
       const res = await authService.userRegister(user);
-      console.log(res);
-      dispatch(signUserSuccess());
+      dispatch(signUserSuccess(res.user));
     } catch (error) {
       dispatch(signUserFailure(error.response.data.errors));
     }
   };
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [loggedIn]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -65,7 +72,8 @@ export default function Register() {
             Sign up
           </Typography>
           <Box component="form" noValidate sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+            <ValidationError />
+            <Grid container spacing={2} mt={1}>
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"

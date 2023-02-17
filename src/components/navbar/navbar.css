@@ -14,3 +14,19 @@
   color: #000;
   text-decoration: none;
 }
+
+.logo {
+  height: 120px;
+  width: 180px;
+  padding: 20px 0;
+}
+.nav__btn:hover {
+  color: #fff !important;
+}
+.nav__create {
+  margin-right: 50px;
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 0;
+}

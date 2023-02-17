@@ -3,3 +3,7 @@ export { default as Login } from "./login/login";
 export { default as Register } from "./register/register";
 export { default as Navbar } from "./navbar/navbar";
 export { default as ForgotPass } from "./forgotPass/forgotPass";
+export { default as ValidationError } from "./validation/validation-error";
+export { default as ArticleDetail } from "./articleDetail/articleDetail";
+export { default as CreateArticle } from "./createArticle/createArticle";
+export { default as EditArticle } from "./editArticle/editArticle";

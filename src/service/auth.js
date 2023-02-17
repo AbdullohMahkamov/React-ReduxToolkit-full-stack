@@ -6,11 +6,12 @@ const authService = {
     return res.data;
   },
   async userLogin(user) {
-    const respons = await axios.post("/users/login", { user });
-    return respons.data;
+    const res = await axios.post("/users/login", { user });
+    return res.data;
   },
   async userInfo() {
-    // const response = await axios.get("/user");
+    const res = await axios.get("/user");
+    return res.data;
   },
 };
 

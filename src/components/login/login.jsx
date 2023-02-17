@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { signUserStart, signUserSuccess, signUserFailure } from "../../slice/actions";
 import authService from "../../service/auth";
+import ValidationError from "../validation/validation-error";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit">Toolkit\App</Link> {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -21,9 +22,10 @@ const theme = createTheme();
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, loggedIn } = useSelector((state) => state.auth);
 
   const loginHendler = async (e) => {
     e.preventDefault();
@@ -36,6 +38,12 @@ export default function Login() {
       dispatch(signUserFailure(error.response.data.errors));
     }
   };
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, [loggedIn]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -56,6 +64,7 @@ export default function Login() {
             Sign in
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
+            <ValidationError />
             <TextField
               margin="normal"
               required
