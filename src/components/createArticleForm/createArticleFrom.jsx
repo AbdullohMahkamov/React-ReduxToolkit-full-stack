@@ -7,8 +7,6 @@ const CreateArticleFrom = (props) => {
   const { isLoading } = useSelector((state) => state.auth);
   return (
     <Box>
-      <Typography variant="h2">Create article</Typography>
-
       <form onSubmit={formSubmit}>
         <TextField
           margin="normal"
@@ -37,7 +35,7 @@ const CreateArticleFrom = (props) => {
           style={{ width: "100%", height: "200px", padding: "10px" }}
         />
         <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-          {isLoading ? "Creating..." : "Create article"}
+          {isLoading ? "Creating..." : "Create"}
         </Button>
       </form>
     </Box>

@@ -1,9 +1,16 @@
 import { Box, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ArticlesService from "../../service/articles";
-import { getArticlesDetailError, getArticlesDetailStart, getArticlesDetailSuccess } from "../../slice/article";
+import {
+  getArticlesDetailError,
+  getArticlesDetailStart,
+  getArticlesDetailSuccess,
+  postArticleError,
+  postArticleStart,
+  postArticleSuccess,
+} from "../../slice/article";
 import CreateArticleFrom from "../createArticleForm/createArticleFrom";
 // import CreateArticleFrom from "../createArticleForm/createArticleFrom";
 
@@ -13,6 +20,7 @@ const EditArticle = () => {
   const [body, setBody] = useState("");
   const dispatch = useDispatch();
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getArticleDetail = async () => {
@@ -33,6 +41,15 @@ const EditArticle = () => {
 
   const formSubmit = async (e) => {
     e.preventDefault();
+    const article = { title, description, body };
+    dispatch(postArticleStart());
+    try {
+      await ArticlesService.editArticle(slug, article);
+      dispatch(postArticleSuccess());
+      navigate("/");
+    } catch (error) {
+      dispatch(postArticleError());
+    }
   };
 
   const fromPros = { title, setTitle, description, setDescription, body, setBody, formSubmit };

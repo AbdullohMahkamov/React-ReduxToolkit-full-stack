@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import CreateArticleFrom from "../createArticleForm/createArticleFrom";
 import ArticlesService from "../../service/articles";
@@ -30,6 +30,7 @@ const CreateArticle = () => {
 
   return (
     <Box sx={{ textAlign: "center", maxWidth: "600px", m: "auto" }}>
+      <Typography variant="h2">Create article</Typography>
       <CreateArticleFrom {...fromPros} />
     </Box>
   );
